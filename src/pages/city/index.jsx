@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, Table, Button,Form, Input ,Select ,Modal,message} from "antd";
+import { Card, Table, Button,Form ,Select ,Modal,message} from "antd";
 import axios from "../../axios";
 import Utils from '../../utils/utils';
 const FormItem = Form.Item;
@@ -82,22 +82,14 @@ export default class City extends Component{
             },{
                 title:'用车模式',
                 dataIndex:'mode',
-                render(config){
-                    let ob = {
-                        '1' : '指定停车点模式',
-                        '2' : '禁停区模式'
-                    }
-                    return ob[config];
+                render(mode){
+                    return mode === '1' ? '指定停车点模式' : '禁停区模式'
                 }
             },{
                 title:'营运模式',
                 dataIndex:'op_mode',
-                render(config){
-                    let ob = {
-                        '1' : '自营',
-                        '2' : '加盟'
-                    }
-                    return ob[config];
+                render(op_mode){
+                    return op_mode === '1' ? '自营' : '加盟'
                 }
             },{
                 title:'授权加盟商',
@@ -133,7 +125,8 @@ export default class City extends Component{
                 </Card>
 
                 <div className="content-wrap">
-                    <Table 
+                    <Table
+                        bordered
                         columns={columns}
                         dataSource={this.state.list}
                         pagination={this.state.pagination}
