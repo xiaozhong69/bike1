@@ -43,13 +43,26 @@ export default class Order extends Component{
             })
         }
 
+        //订单详情
+        openOrderDetail = ()=>{
+            let item = this.state.selectedItem;
+            if(!item){
+                Modal.info({
+                    title:'信息',
+                    content:'请选择一条订单！'
+                })
+                return;
+            }
+            window.open(`/#/common/order/detail/${item.id}`,'_blank');
+        }
+
         //结束订单
         handleConfirm = ()=>{
             let item = this.state.selectedItem;
             if(!item){
                 Modal.info({
                     title:'信息',
-                    content:'请选择一条订单进行结束！'
+                    content:'请选择一条订单！'
                 })
                 return;
             }
@@ -160,7 +173,7 @@ export default class Order extends Component{
                 </Card>
 
                 <Card style={{marginTop:10}}>
-                    <Button type='primary'>订单详情</Button>
+                    <Button type='primary' onClick={this.openOrderDetail}>订单详情</Button>
                     <Button type='primary' style={{marginLeft:10} } onClick={this.handleConfirm}>结束订单</Button>
                 </Card>
 

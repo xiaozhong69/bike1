@@ -1,38 +1,65 @@
-@import '/src/style/default.less';
+@import '../../style/default.less';
 
-.header{
-    background-color: @colorM;
-    .header-top{
-        height:60px;
-        line-height: 60px;
-        padding: 0 20px;
-        text-align: right;
-        a{
-            margin-left: 40px;
-        }
+.header {
+  background-color: @colorM;
+  .header-top {
+    height: 60px;
+    line-height: 60px;
+    text-align: right;
+    padding:0 20px;
+    .logo{
+      line-height: 55px;
+      text-align: left;
+      font-size: 18px;
+      img {
+        height: 55px;
+        vertical-align: middle;
+        margin-right: 10px;
+      }
     }
-    .breadcrumb{
-        height: 40px;
-        line-height: 40px;
-        padding: 0 20px;
-        border-top: 1px solid #f9c700;
-        .breadcrumb-title{
-            text-align: center;
-            &:after{
-                position:absolute;
-                left: calc(7vw - 10px);
-                top: 39px;
-                content: '';
-                border-width:10px;
-                border-style:solid;
-                border-color: #fff transparent  transparent  transparent ;
-            }
-        }
-        .weather{
-            text-align: right;
-            .date{
-                margin-right: 10px;
-            }
-        }
+    a{
+      margin-left: 40px;
+      color:#f9c700;
     }
+  }
+  .breadcrumb {
+    height: 40px;
+    line-height: 40px;
+    border-top:1px solid #f9c700;
+    padding:0 20px;
+    .breadcrumb-title {
+      text-align: center;
+      font-size: @fontC;
+      &:after{
+        position:absolute;
+        left: calc(6vw - 7px);
+        top: 39px;
+        content:'';
+        display: block;
+        width: 10px;
+        border-top: 9px solid @colorM;
+        border-left: 12px solid transparent;
+        border-right: 12px solid transparent;
+      }
+    }
+    .breadcrumb-right {
+      text-align: right;
+      .weather{
+        padding-left:10px
+      }
+    }
+  }
+}
+
+//common 页面简单头
+.simple-page{
+  .header-top{
+    background-color: #1890ff;
+    color:@colorM;
+  }
+  // .ant-form,
+  // .ant-col-12,
+  // .weather {
+  //   display:none;
+  // }
 }
