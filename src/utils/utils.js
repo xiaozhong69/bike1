@@ -20,7 +20,7 @@ const Utils ={
                 showTotal:()=>{
                     return `共${data.result.total}条`
                 },
-                // showQuickJumper:true
+                showQuickJumper:true
             }
         }
 }

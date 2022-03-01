@@ -165,7 +165,6 @@ export default class BasicTable extends Component{
         })
 
         let {selectedRowKeys} = this.state;
-
         const rowSelection = {
             type: 'radio',
             selectedRowKeys
