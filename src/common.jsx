@@ -6,7 +6,7 @@ export default class Common extends Component {
 	render() {
 		return (
 			<div>
-				<Row className="simple-page">
+				<Row className="simple-page" style={{display:'flex'}}>
 					<Header menuType='second'/>
 				</Row>
 				<Row className="content">

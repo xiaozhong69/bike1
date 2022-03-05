@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Row, Col } from "antd";
 import axios from "axios";
-import "./index.less";
 import Util from "../../utils/utils";
+import "./index.less";
 export default class Header extends Component {
 	state = {
 		userName: "钟贞长",
