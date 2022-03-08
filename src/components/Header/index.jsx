@@ -9,7 +9,7 @@ export default class Header extends Component {
 		sysTime: "",
 		weather: "",
 	};
-	UNSAFE_componentWillMount() {
+	componentDidMount() {
 		let { setTime, getWeatherAPIData } = this;
 
 		setTime();

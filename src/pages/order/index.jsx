@@ -1,15 +1,58 @@
 import React,{Component} from 'react';
-import {Card,Form,Button, Select ,Table, DatePicker,Modal,message} from 'antd';
+import {Card,Form,Button,Table,Modal,message} from 'antd';
 import axios from "../../axios";
 import Utils from '../../utils/utils';
+// const {Option} = Select;
+import BaseForm from '../../components/BaseForm';
 const FormItem = Form.Item;
-const { Option } = Select;
 export default class Order extends Component{
 
     state = {
         orderInfo:{},
         orderConfirmVisible: false,
     }
+
+    handleFilter = (params)=>{
+        this.params = params;
+        this.requestList();
+    }
+
+    formList = [
+        {
+            type:'SELECT',
+            label:'城市',
+            field:'city_id',
+            initialValue:'0',
+            placeholder:'全部',
+            width:100,
+            list:[{
+                id:'0', name:'全部'
+            },{
+                id:'1', name:'北京'
+            },{
+                id:'2', name:'上海'
+            },{
+                id:'3', name:'天津'
+            }]
+        },{
+            type:'时间查询',
+            width:140
+        },{
+            type:'SELECT',
+            label:'订单状态',
+            field:'order_status',
+            placeholder:'全部',
+            initialValue:'0',
+            width:100,
+            list:[{
+                id:'0', name:'全部',
+            },{
+                id:'1', name:'进行中',
+            },{
+                id:'2', name:'结束行程',
+            }]
+        }
+    ]
 
     params = {
         page:1
@@ -21,26 +64,7 @@ export default class Order extends Component{
 
         //默认请求的接口数据
         requestList = ()=>{
-            let _this = this;
-            axios.ajax({
-                url:'https://www.fastmock.site/mock/cd130387dae9bcda66a3b5f4a56fe7a0/order/list',
-                data:{
-                    params:{
-                        page: this.params.page
-                    }
-                }
-            }).then((res)=>{
-                this.setState({
-                    list: res.result.item_list.map((item,index)=>{
-                        item.key = index;
-                        return item;
-                    }),
-                    pagination:Utils.pagination(res,(current)=>{
-                        _this.params.page = current;
-                        this.requestList();
-                    })
-                })
-            })
+            axios.requestList(this,'https://www.fastmock.site/mock/cd130387dae9bcda66a3b5f4a56fe7a0/order/list',this.params,true);
         }
 
         //订单详情
@@ -155,6 +179,9 @@ export default class Order extends Component{
                 dataIndex: 'user_pay'
             }
         ]
+        columns.map((item,index)=>{
+            return item.key=index;
+        })
         const formItemLayout = {
             labelCol:{span:5},
             warpperCol:{span:19}
@@ -169,7 +196,7 @@ export default class Order extends Component{
         return(
             <div>
                 <Card>
-                    <FilterForm></FilterForm>
+                    <BaseForm formList={this.formList} filterSubmit={this.handleFilter}/>
                 </Card>
 
                 <Card style={{marginTop:10}}>
@@ -227,61 +254,3 @@ export default class Order extends Component{
         )
     }
 };
-
-class FilterForm extends Component{
-    render(){
-        return(
-            <Form layout="inline">
-                <FormItem 
-                    label="城市"
-                    name='city_id'
-                >
-                    <Select
-                        placeholder='全部'
-                        style={{width:100}}
-                    >
-                        <Option value=''>全部</Option>
-                        <Option value='1'>秦皇岛市</Option>
-                        <Option value='2'>天津市</Option>
-                        <Option value='3'>海口市</Option>
-                    </Select>
-                </FormItem>
-
-                <FormItem
-                    label="订单时间"
-                    name='start_time'
-                >
-                    <DatePicker />
-                </FormItem>
-                <FormItem 
-                    label="~"
-                    colon={false}
-                    name='end_time'
-                >
-                    <DatePicker showTime/>
-                </FormItem>
-
-                <FormItem 
-                    label="订单状态"
-                    name='order_status'
-                >
-                    <Select
-                        placeholder='全部'
-                        style={{width:120}}
-                    >
-                        <Option value=''>全部</Option>
-                        <Option value='1'>进行中</Option>
-                        <Option value='2'>行程结束</Option>
-                    </Select>
-                </FormItem>
-
-                <FormItem>
-                    <span style={{margin:'0 10px'}}>
-                        <Button type="primary">查询</Button>
-                    </span>
-                        <Button>重置</Button>
-                </FormItem>
-            </Form>
-        )
-    }
-}
