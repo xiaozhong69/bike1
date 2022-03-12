@@ -21,15 +21,24 @@ export default class BaseForm extends Component{
     if( formList && formList.length > 0 ){
       formList.forEach(item=>{
         let { type , label, field, placeholder , initialValue , width , list } = item;
-        
-        if( type === '时间查询' ){
+
+        if( type === 'CITY' ){
+        const city =
+            <FormItem label='城市' name='city' key='city' initialValue={initialValue}>
+                <Select placeholder={placeholder} style={{ width : width }}>
+                    {Utils.getOptionList(list)}
+                </Select>
+            </FormItem>;
+          formItemList.push(city);
+        }
+        else if( type === '时间查询' ){
             const begin_time = 
               <FormItem label="订单时间" name='start_time' key={'begin_time'}>
-                  <DatePicker />
+                  <DatePicker placeholder='起始时间'/>
               </FormItem>;
             const end_time = 
               <FormItem label="~" colon={false} name='end_time' key={'end_time'}>
-                  <DatePicker showTime/>
+                  <DatePicker placeholder='结束时间' showTime/>
               </FormItem>;
             formItemList.push(begin_time,end_time);
         }
@@ -61,7 +70,7 @@ export default class BaseForm extends Component{
         else if( type === 'DATE' ){
             const date = 
             <FormItem label={label} key={field} >
-                <DatePicker format='YYYY-MM-DD HH:mm:ss' placeholder='选择结束时间' style={{ width: width }}/>
+                <DatePicker format='YYYY-MM-DD HH:mm:ss' placeholder='请选择日期' style={{ width: width }}/>
             </FormItem>
             formItemList.push(date);
         }

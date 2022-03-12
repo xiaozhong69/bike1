@@ -35,6 +35,20 @@ const Utils ={
                 )
             });
             return options;
+        },
+        UpdateSelectedItem(selectedRowKeys,selectedItem,selectedIds){
+            if(selectedIds){
+                this.setState({
+                    selectedRowKeys,
+                    selectedItem,
+                    selectedIds
+                })
+            }else{
+                this.setState({
+                    selectedRowKeys,
+                    selectedItem
+                })
+            }
         }
 }
 export default Utils;

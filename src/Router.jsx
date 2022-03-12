@@ -19,6 +19,8 @@ import City from './pages/city/index';
 import Order from './pages/order/index';
 import Common from './common';
 import OrderDetail from './pages/order/detail';
+import User from "./pages/user";
+import BikeMap from "./pages/map/bikeMap";
 import NoMatch from './pages/nomatch';
 export default class Router extends Component {
     render() {
@@ -43,6 +45,8 @@ export default class Router extends Component {
                                 <Route path="/admin/table/high" component={HighTable} />
                                 <Route path="/admin/city" component={City} />
                                 <Route path="/admin/order" component={Order} />
+                                <Route path="/admin/user" component={User} />
+                                <Route path="/admin/map" component={BikeMap} />
                                 <Route component={NoMatch} />
                             </Switch>
                         </Admin>

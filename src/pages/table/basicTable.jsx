@@ -5,7 +5,8 @@ import Utils from '../../utils/utils';
 
 export default class BasicTable extends Component{
     state = {
-        dataSource2:[]
+        dataSource2:[],
+        list:[]
     };
 
     params ={
@@ -13,31 +14,7 @@ export default class BasicTable extends Component{
     }
 
     requsetDataSource2(){
-        let _this = this;
-        axios.ajax({
-            url:'',
-            data:{
-                params:{
-                    page:this.params.page
-                },
-                isShowLoading:true
-            }
-        }).then((res)=>{
-            if(res.code == 0){
-                res.result.list.map((item,index)=>{
-                    item.key = index;
-                })
-                this.setState({
-                    dataSource2:res.result.list,
-                    selectedRowKeys:[],
-                    selectedRows:null,
-                    pagination:Utils.pagination(res,(current)=>{
-                        _this.params.page = current;
-                        this.requsetDataSource2()
-                    })
-                })
-            }
-        })
+       axios.requestList(this,'https://www.fastmock.site/mock/c20d56cecbc589f400ebb4580883a435/table/list1',this.params,true);
     }
 
     onRowClick(record,index){
@@ -56,7 +33,7 @@ export default class BasicTable extends Component{
         let rows = this.state.selectedRows;
         let ids = [];
         rows.map((item)=>{
-            ids.push(item.id);
+            return ids.push(item.id);
         })
         Modal.confirm({
             title:'删除提示',
@@ -97,7 +74,7 @@ export default class BasicTable extends Component{
             }
         ]
         data.map((item,index)=>{
-            item.key = index;
+            return item.key = index;
         })
         this.setState({
             dataSource:data
@@ -110,58 +87,28 @@ export default class BasicTable extends Component{
             {
                 title:'用户名',
                 dataIndex:'userName',
-                // key:'userName',
             },{
                 title:'性别',
                 dataIndex:'sex',
-                // key:'sex',
-                // render(sex){
-                //     return sex == 1 ?'男':'女'
-                // }
             },{
                 title:'状态',
                 dataIndex:'status',
-                // key:'status',
-                // render(status){
-                //     let config = {
-                //         '1':'咸鱼一条',
-                //         '2':'风华浪子',
-                //         '3':'北大才子',
-                //         '4':'百度FE',
-                //         '5':'创业者',
-                //     }
-                //     return config[status]
-                // }
             },{
                 title:'爱好',
                 dataIndex:'interest',
-                // key:'interest',
-                // render(interest){
-                //     let config = {
-                //         '1':'篮球',
-                //         '2':'足球',
-                //         '3':'排球',
-                //         '4':'乒乓球',
-                //         '5':'橄榄球',
-                //     }
-                //     return config[interest]
-                // }
             },{
                 title:'生日',
                 dataIndex:'birthday',
-                // key:'birthday'
             },{
                 title:'地址',
                 dataIndex:'address',
-                // key:'address'
             },{
                 title:'早起时间',
                 dataIndex:'time',
-                // key:'time'
             }
         ]
         columns.map((item,index)=>{
-            item.key = index;
+            return item.key = index;
         })
 
         let {selectedRowKeys} = this.state;
@@ -196,7 +143,7 @@ export default class BasicTable extends Component{
                     <Table
                         bordered
                         columns={columns}
-                        dataSource={this.state.dataSource2}
+                        dataSource={this.state.list}
                         pagination={false}
                     />
                 </Card>
@@ -213,7 +160,7 @@ export default class BasicTable extends Component{
                             };
                           }}
                         columns={columns}
-                        dataSource={this.state.dataSource2}
+                        dataSource={this.state.list}
                         pagination={false}
                     />
                 </Card>
@@ -224,7 +171,7 @@ export default class BasicTable extends Component{
                         bordered
                         rowSelection={rowCheckSelection}
                         columns={columns}
-                        dataSource={this.state.dataSource2}
+                        dataSource={this.state.list}
                         pagination={false}
                     />
                 </Card>
@@ -233,7 +180,7 @@ export default class BasicTable extends Component{
                     <Table
                         bordered
                         columns={columns}
-                        dataSource={this.state.dataSource2}
+                        dataSource={this.state.list}
                         pagination={this.state.pagination}
                     />
                 </Card>

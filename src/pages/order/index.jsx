@@ -1,15 +1,17 @@
 import React,{Component} from 'react';
-import {Card,Form,Button,Table,Modal,message} from 'antd';
+import {Card,Form,Button,Modal,message} from 'antd';
 import axios from "../../axios";
-import Utils from '../../utils/utils';
+import ETable from '../../components/ETable';
 // const {Option} = Select;
 import BaseForm from '../../components/BaseForm';
+import Utils from '../../utils/utils';
 const FormItem = Form.Item;
 export default class Order extends Component{
 
     state = {
         orderInfo:{},
         orderConfirmVisible: false,
+        selectedRowKeys:[]
     }
 
     handleFilter = (params)=>{
@@ -98,7 +100,7 @@ export default class Order extends Component{
                     }
                 }
             }).then((res)=>{
-                if(res.code == 0){
+                if(res.code === 0){
                     this.setState({
                         orderInfo:res.result,
                         orderConfirmVisible:true
@@ -118,21 +120,13 @@ export default class Order extends Component{
                     }
                 }
             }).then((res)=>{
-                if(res.code == 0){
+                if(res.code === 0){
                     message.success('订单结束成功');
                     this.setState({
                         orderConfirmVisible:false
                     });
                     this.requestList();
                 }
-            })
-        }
-
-        onRowClick(record,index){
-            let selectKey = [index];
-            this.setState({
-                selectedRowKeys: selectKey,
-                selectedItem: record
             })
         }
 
@@ -163,7 +157,7 @@ export default class Order extends Component{
                 title: '状态',
                 dataIndex: 'status',
                 render(status){
-                    return status == 1 ? '进行中':'行程结束'
+                    return status === 1 ? '进行中':'行程结束'
                 }
             },{
                 title: '开始时间',
@@ -187,70 +181,75 @@ export default class Order extends Component{
             warpperCol:{span:19}
         }
 
-        let {selectedRowKeys} = this.state;
-        const rowSelection = {
-            type: 'radio',
-            selectedRowKeys
-        }
+        return (
+		<div>
+			<Card>
+				<BaseForm
+					formList={this.formList}
+					filterSubmit={this.handleFilter}
+				/>
+			</Card>
 
-        return(
-            <div>
-                <Card>
-                    <BaseForm formList={this.formList} filterSubmit={this.handleFilter}/>
-                </Card>
+			<Card style={{ marginTop: 10 }}>
+				<Button
+					type="primary"
+					onClick={this.openOrderDetail}
+				>
+					订单详情
+				</Button>
+				<Button
+					type="primary"
+					style={{ marginLeft: 10 }}
+					onClick={this.handleConfirm}
+				>
+					结束订单
+				</Button>
+			</Card>
 
-                <Card style={{marginTop:10}}>
-                    <Button type='primary' onClick={this.openOrderDetail}>订单详情</Button>
-                    <Button type='primary' style={{marginLeft:10} } onClick={this.handleConfirm}>结束订单</Button>
-                </Card>
+			<div className="content-wrap">
+				<ETable
+					updateSelectedItem={Utils.UpdateSelectedItem.bind(this)}
+					columns={columns}
+					selectedRowKeys={this.state.selectedRowKeys}
+					selectedItem={this.state.selectedItem}
+					selectedIds={this.state.selectedIds}
+					dataSource={this.state.list}
+					pagination={this.state.pagination}
+					// rowSelection={"checkbox"}
+				/>
+			</div>
 
-                <div className='content-wrap'>
-                    <Table
-                        bordered
-                        columns={columns}
-                        dataSource={this.state.list}
-                        pagination={this.state.pagination}
-                        rowSelection={rowSelection}
-                        onRow={(record,index) => {
-                            return {
-                              onClick: ()=>{
-                                  this.onRowClick(record,index);
-                              }, // 点击行
-                            };
-                          }}
-                    />
-                </div>
-
-                <Modal
-                    title='结束订单'
-                    visible={this.state.orderConfirmVisible}
-                    onCancel={()=>{
-                        this.setState({
-                            orderConfirmVisible:false
-                        })
-                    }}
-                    onOk={this.handleFinishOrder}
-                    width={600}
-                >
-                    <Form 
-                        {...formItemLayout}
-                        layout='horizontal'
-                    >
-                        <FormItem label="车辆编号">
-                            {this.state.orderInfo.bike_sn}
-                        </FormItem>
-                        <FormItem label="剩余电量">
-                            {this.state.orderInfo.battery + '%'}
-                        </FormItem>
-                        <FormItem label="行程开始时间">
-                            {this.state.orderInfo.start_time}
-                        </FormItem>
-                        <FormItem label="当前位置">
-                            {this.state.orderInfo.location}
-                        </FormItem>
-                    </Form>
-                </Modal>
-            </div>
-        )
+			<Modal
+				title="结束订单"
+				visible={this.state.orderConfirmVisible}
+				onCancel={() => {
+					this.setState({
+						orderConfirmVisible: false,
+					});
+				}}
+				onOk={this.handleFinishOrder}
+				width={600}
+			>
+				<Form {...formItemLayout} layout="horizontal">
+					<FormItem label="车辆编号">
+						{this.state.orderInfo.bike_sn}
+					</FormItem>
+					<FormItem label="剩余电量">
+						{this.state.orderInfo.battery +
+							"%"}
+					</FormItem>
+					<FormItem label="行程开始时间">
+						{
+							this.state.orderInfo
+								.start_time
+						}
+					</FormItem>
+					<FormItem label="当前位置">
+						{this.state.orderInfo.location}
+					</FormItem>
+				</Form>
+			</Modal>
+		</div>
+	);
     }
 };

@@ -24,9 +24,9 @@ export default class HighTable extends Component {
 				},
 			})
 			.then((res) => {
-				if (res.code == 0) {
+				if (res.code === 0) {
 					res.result.list.map((item, index) => {
-						item.key = index;
+						return item.key = index;
 					});
 					this.setState({
 						dataSource: res.result.list,
@@ -251,11 +251,11 @@ export default class HighTable extends Component {
 		];
 
 		columns.map((item, index) => {
-			item.key = index;
+			return item.key = index;
 		});
 
 		columns2.map((item, index) => {
-			item.key = index;
+			return item.key = index;
 		});
 
 		return (

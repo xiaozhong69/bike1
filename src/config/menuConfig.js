@@ -97,7 +97,7 @@ const menuList = [
   },
   {
     title: '车辆地图',
-    key: '/admin/bikeMap'
+    key: '/admin/map'
   },
   {
     title: '图标',

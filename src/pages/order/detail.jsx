@@ -71,7 +71,6 @@ export default class OrderDetail extends Component{
         
             // 创造MultiMarker显示起终点标记
             var marker = new window.TMap.MultiMarker({
-                
                 id: 'marker-layer',
                 map: this.map,
                 styles: {
@@ -185,7 +184,7 @@ export default class OrderDetail extends Component{
     }
 
     render(){
-        let {orderInfo} = this.state;
+        let {orderInfo,start,end} = this.state;
         return(
             <div>
                 <Card style={{marginLeft:70}}>
@@ -205,11 +204,11 @@ export default class OrderDetail extends Component{
                                 </li>
                                 <li>
                                     <div className="detail-form-left">起点</div>
-                                    <div className="detail-form-content">{this.state.end.lat?this.state.end.lat:40.043776}, {this.state.end.lng?this.state.end.lng:116.361221}</div>
+                                    <div className="detail-form-content">{end.lat?end.lat:40.043776}, {end.lng?end.lng:116.361221}</div>
                                 </li>
                                 <li>
                                     <div className="detail-form-left">终点</div>
-                                    <div className="detail-form-content">{this.state.start.lat?this.state.start.lat:40.008637}, {this.state.start.lng?this.state.start.lng:116.398806}</div>
+                                    <div className="detail-form-content">{start.lat?start.lat:40.008637}, {start.lng?start.lng:116.398806}</div>
                                 </li>
                                 <li>
                                     <div className="detail-form-left">用车模式</div>

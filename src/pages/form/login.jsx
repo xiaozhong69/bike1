@@ -20,13 +20,13 @@ export default class FormLogin extends Component{
                     <Form
                         layout='inline'
                     >
-                        <FormItem>
+                        <FormItem name='userName2'>
                             <Input placeholder='请输入用户名'/>
                         </FormItem>
-                        <FormItem>
+                        <FormItem name='password2'>
                             <Input placeholder='请输入密码'/>
                         </FormItem>
-                        <FormItem>
+                        <FormItem name='denglu2'>
                             <Button type='primary'>登录</Button>
                         </FormItem>
                     </Form>
@@ -80,7 +80,7 @@ export default class FormLogin extends Component{
                                 placeholder='请输入密码'
                             />
                         </FormItem>
-                        <FormItem>
+                        <FormItem name='denglu'>
                             <Button type='primary' htmlType="submit">登录</Button>
                         </FormItem>
                         <FormItem
