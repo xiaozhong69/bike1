@@ -24,6 +24,7 @@ import BikeMap from "./pages/map/bikeMap";
 import Bar from "./pages/echarts/bar";
 import Pie from "./pages/echarts/pie";
 import Line from "./pages/echarts/line";
+import richText from "./pages/rich";
 import NoMatch from './pages/nomatch';
 export default class Router extends Component {
     render() {
@@ -53,6 +54,7 @@ export default class Router extends Component {
                                 <Route path="/admin/charts/bar" component={Bar} />
                                 <Route path="/admin/charts/pie" component={Pie} />
                                 <Route path="/admin/charts/line" component={Line} />
+                                <Route path="/admin/rich" component={richText} />
                                 <Route component={NoMatch} />
                             </Switch>
                         </Admin>
