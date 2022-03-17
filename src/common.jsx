@@ -1,4 +1,4 @@
-import { Col, Row } from "antd";
+import {Row } from "antd";
 import React, { Component } from "react";
 import Header from "./components/Header";
 import "./style/common.less";

@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { HashRouter as Routers, Route, Switch } from 'react-router-dom';
+import React, {Component} from 'react';
+import {HashRouter as Routers, Route, Switch, Redirect} from 'react-router-dom';
 import Admin from './Admin';
 import App from './App';
 import Buttons from "./pages/ui/buttons";
@@ -25,45 +25,51 @@ import Bar from "./pages/echarts/bar";
 import Pie from "./pages/echarts/pie";
 import Line from "./pages/echarts/line";
 import richText from "./pages/rich";
+import permission from "./pages/permission";
 import NoMatch from './pages/nomatch';
+
 export default class Router extends Component {
     render() {
         return (
             <Routers>
                 <App>
-                    <Route path="/admin" render={() =>
-                        <Admin>
-                            <Switch>
-                                <Route path="/admin/home" component={Home} />
-                                <Route path="/admin/ui/buttons" component={Buttons} />
-                                <Route path="/admin/ui/modals" component={Modals} />
-                                <Route path="/admin/ui/loadings" component={Loadings} />
-                                <Route path="/admin/ui/notification" component={Notice} />
-                                <Route path="/admin/ui/messages" component={Message} />
-                                <Route path="/admin/ui/tabs" component={Tab} />
-                                <Route path="/admin/ui/gallery" component={Gallery} />
-                                <Route path="/admin/ui/carousel" component={Carousels} />
-                                <Route path="/admin/form/login" component={FormLogin} />
-                                <Route path="/admin/form/reg" component={FormRegister} />
-                                <Route path="/admin/table/basic" component={BasicTable} />
-                                <Route path="/admin/table/high" component={HighTable} />
-                                <Route path="/admin/city" component={City} />
-                                <Route path="/admin/order" component={Order} />
-                                <Route path="/admin/user" component={User} />
-                                <Route path="/admin/map" component={BikeMap} />
-                                <Route path="/admin/charts/bar" component={Bar} />
-                                <Route path="/admin/charts/pie" component={Pie} />
-                                <Route path="/admin/charts/line" component={Line} />
-                                <Route path="/admin/rich" component={richText} />
-                                <Route component={NoMatch} />
-                            </Switch>
-                        </Admin>
-                    } />
-                    <Route path="/common" render={() =>
-                        <Common>
-                            <Route path="/common/order/detail/:orderId" component={OrderDetail} />
-                        </Common>
-                    } />
+                    <Switch>
+                        <Route path="/common" render={() =>
+                            <Common>
+                                <Route path="/common/order/detail/:orderId" component={OrderDetail}/>
+                            </Common>
+                        }/>
+                        <Route path="/" render={() =>
+                            <Admin>
+                                <Switch>
+                                    <Route path="/home" component={Home}/>
+                                    <Route path="/ui/buttons" component={Buttons}/>
+                                    <Route path="/ui/modals" component={Modals}/>
+                                    <Route path="/ui/loadings" component={Loadings}/>
+                                    <Route path="/ui/notification" component={Notice}/>
+                                    <Route path="/ui/messages" component={Message}/>
+                                    <Route path="/ui/tabs" component={Tab}/>
+                                    <Route path="/ui/gallery" component={Gallery}/>
+                                    <Route path="/ui/carousel" component={Carousels}/>
+                                    <Route path="/form/login" component={FormLogin}/>
+                                    <Route path="/form/reg" component={FormRegister}/>
+                                    <Route path="/table/basic" component={BasicTable}/>
+                                    <Route path="/table/high" component={HighTable}/>
+                                    <Route path="/city" component={City}/>
+                                    <Route path="/order" component={Order}/>
+                                    <Route path="/user" component={User}/>
+                                    <Route path="/map" component={BikeMap}/>
+                                    <Route path="/charts/bar" component={Bar}/>
+                                    <Route path="/charts/pie" component={Pie}/>
+                                    <Route path="/charts/line" component={Line}/>
+                                    <Route path="/rich" component={richText}/>
+                                    <Route path="/permission" component={permission}/>
+                                    <Redirect to={'/home'}/>
+                                    <Route component={NoMatch}/>
+                                </Switch>
+                            </Admin>
+                        }/>
+                    </Switch>
                 </App>
             </Routers>
         );

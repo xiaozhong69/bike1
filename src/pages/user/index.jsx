@@ -223,7 +223,7 @@ export default class User extends Component{
                     visible={this.state.isVisible}
                     onOk={this.handleSubmit}
                     onCancel={()=>{
-                        this.myForm1.myForm2.resetFields()
+                        this.myForm1.myForm2.resetFields();
                         this.setState({
                             isVisible:false,
                         })
