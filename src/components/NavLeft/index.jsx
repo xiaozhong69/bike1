@@ -1,15 +1,31 @@
 import React, { Component } from 'react'
+import {connect} from "react-redux";
 import MenuConfig from './../../config/menuConfig'
+import {switchMenu} from '../../redux/action';
 import { Menu } from 'antd';
 import { NavLink } from 'react-router-dom';
 import './index.less'
 const { SubMenu } = Menu;
 
+class Navleft extends Component {
 
-export default class Navleft extends Component {
+    state = {
+        currentKey:''
+    }
+
+    handleClick = ({item,key})=>{
+        const {dispatch} = this.props;
+        dispatch(switchMenu(item.props.title));
+        this.setState({
+            currentKey:key
+        })
+    }
+
     UNSAFE_componentWillMount() {
         const menuTreeNode = this.renderMenu(MenuConfig);
+        const currentKey = window.location.hash.replace(/#|\?.*$/g,'');
         this.setState({
+            currentKey,
             menuTreeNode
         })
     }
@@ -36,6 +52,8 @@ export default class Navleft extends Component {
                     <h1>Imooc MS</h1>
                 </div>
                 <Menu
+                    onClick={this.handleClick}
+                    selectedKeys={this.state.currentKey}
                     theme='dark'
                     className='left-menu'
                 >
@@ -45,3 +63,5 @@ export default class Navleft extends Component {
         )
     }
 }
+
+export default connect()(Navleft);

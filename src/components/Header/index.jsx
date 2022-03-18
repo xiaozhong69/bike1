@@ -1,9 +1,11 @@
 import React, { Component } from "react";
+import {connect} from "react-redux";
 import { Row, Col } from "antd";
 import axios from "axios";
 import Util from "../../utils/utils";
 import "./index.less";
-export default class Header extends Component {
+
+class Header extends Component {
 	state = {
 		userName: "钟贞长",
 		sysTime: "",
@@ -77,3 +79,10 @@ export default class Header extends Component {
 		);
 	}
 }
+
+const mapStateToProps = (state)=>{
+	return {
+		menuName : state.menuName
+	}
+}
+export default connect(mapStateToProps)(Header);
