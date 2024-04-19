@@ -18,7 +18,6 @@ export default class City extends Component{
     componentDidMount(){
         this.requestList();
     }
-
     //默认请求的接口数据
     requestList = ()=>{
         let _this = this;
